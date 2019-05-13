@@ -2,6 +2,7 @@
 	import {getWikipediaEntry} from './wikipedia.js'
 	import SearchBar from './components/searchbar.svelte';
 	import ResultCard from './components/resultcard.svelte';
+	import HistoryCard from './components/historycard.svelte';
 
 	let wikiEntry = getDummyWikipediaEntry();
 	let toTranslate = "";
@@ -30,5 +31,6 @@
 		<p>Error {error}</p>
 		{/await}
 	</div>
-	
+	<br>
+	<HistoryCard engTitle={"McDonald's"} zhTitle={"麦当劳"} zhSubtitle={"màidāngláo"}/>
 </div>
