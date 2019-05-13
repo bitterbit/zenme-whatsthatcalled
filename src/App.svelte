@@ -14,8 +14,8 @@
 	}
 </script>
 
-<div>
-	<h1>ZenMeShuo?!</h1>
+<div class="container">
+	<h1 style="text-align: center">ZenMeShuo?!</h1>
 	<SearchBar on:change={onTranslateChange} bind:value={toTranslate}/>
 	<div>
 		{#await wikiEntry}
