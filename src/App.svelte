@@ -1,4 +1,6 @@
 <script>
+	import SearchBar from './components/searchbar.svelte';
+
 	let name = 'world';
 	let MODE_ENG_CHN = 0;
 	let MODE_CHN_ENG = 1;
@@ -50,11 +52,8 @@
 	
 </script>
 <div>
-	<h1>Translate!</h1>
-	<span>{lang_from}</span>
-	<button on:click={toggleMode}>Switch</button>
-	<span>{lang_to}</span><br>
-	<span>Word</span> <input on:change={onTranslateChange} bind:value={toTranslate} type=text/>
+	<h1>ZenMeShuo?!</h1>
+	<SearchBar on:change={onTranslateChange} bind:value={toTranslate}/>
 	<div>
 		{#await wikiEntry}
 		<code>loading...</code>
