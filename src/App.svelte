@@ -1,6 +1,7 @@
 <script>
 	import {getWikipediaEntry} from './wikipedia.js'
 	import SearchBar from './components/searchbar.svelte';
+	import ResultCard from './components/resultcard.svelte';
 
 	let wikiEntry = getDummyWikipediaEntry();
 	let toTranslate = "";
@@ -14,9 +15,12 @@
 	}
 </script>
 
-<div class="container">
+<div class="container" align="center">
 	<h1 style="text-align: center">ZenMeShuo?!</h1>
 	<SearchBar on:change={onTranslateChange} bind:value={toTranslate}/>
+
+	<ResultCard/>
+
 	<div>
 		{#await wikiEntry}
 		<code>loading...</code>
