@@ -1,4 +1,5 @@
 <script>
+    import { fly, slide, fade } from 'svelte/transition';
     export let engTitle;
     export let zhTitle;
     export let zhSubtitle;
@@ -26,7 +27,7 @@
     }
 </style>
 
-<div id="card" class="row">
+<div id="card" class="row" in:slide out:fade>
     <div class="column column-40">
         <h2 style="margin-bottom: -5px;">{zhTitle}</h2>
         <h5>{zhSubtitle}</h5>

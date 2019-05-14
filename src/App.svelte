@@ -4,18 +4,40 @@
 	import ResultCard from './components/resultcard.svelte';
 	import HistoryCard from './components/historycard.svelte';
 
-	let wikiEntry;
+	let wikiPromise;
+	let prevEntry;
 	let toTranslate = "";
 
 	let history = [];
 	let loadedFirstItem = false;
 
+	function entryInHistory(e){
+		for (let i=0; i<history.length; i++){
+			if (history[i].title == e.title){
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	function onTranslateChange() {
-		wikiEntry = translate(toTranslate);
-		wikiEntry.then((entry) => {
+		wikiPromise = translate(toTranslate);
+		wikiPromise.then((entry) => {
+			if (loadedFirstItem) {
+				
+				history = [prevEntry, ...history];
+			}
+			prevEntry = entry;
+
+			const index = entryInHistory(prevEntry);
+			if (index >= 0) {
+				setTimeout(() => {
+					history = history.filter(h => h.title !== prevEntry.title);
+				}, 100)
+			}
+
 			loadedFirstItem = true;
-			history.push(entry);
-			console.log("loaded new entry", entry, history);
+			console.log(history);
 		});
 	}
 </script>
@@ -28,17 +50,15 @@
 		{#if !loadedFirstItem}
 			<code>Type to find out...</code>
 		{:else}
-
-			{#await wikiEntry}
-			<code>loading...</code>
-			{:then entry}
-			<ResultCard title={entry.title} subtitle={entry.subtitle} img={entry.img}/>
-			{:catch error}
-			<p>Error {error}</p>
-			{/await}
-			
+			<ResultCard title={prevEntry.title} subtitle={prevEntry.subtitle} img={prevEntry.img}/>
 		{/if}
 	</div>
 	<br>
-	<HistoryCard engTitle={"McDonald's"} zhTitle={"麦当劳"} zhSubtitle={"màidāngláo"}/>
+
+	{#each history as entry}
+		<HistoryCard	
+			engTitle={entry.origin} 
+			zhTitle={entry.title} 
+			zhSubtitle={entry.subtitle}/>
+	{/each}
 </div>
