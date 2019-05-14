@@ -1,6 +1,6 @@
 # ZenmeShuo?! Whats is it called?! 
+[https://zenmeshuo.surge.sh/](https://zenmeshuo.surge.sh/)  
 Translate brand names between english and chinese using wikipedia written with svelte
-[https://zenmeshuo.surge.sh/](https://zenmeshuo.surge.sh/)
 
 ## Get started
 Install the dependencies...
@@ -13,3 +13,8 @@ npm install
 npm run dev
 ```
 Navigate to [localhost:5000](http://localhost:5000).
+
+## Credits
+Han to Pinyin [sofish/han](https://github.com/sofish/han)  
+Wikipedia Api [dijs/wiki](https://github.com/dijs/wiki)  
+Logos provided by <a href="https://clearbit.com">Clearbit</a>    
