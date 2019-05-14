@@ -6,6 +6,7 @@
 
 	let wikiPromise;
 	let prevEntry;
+	let err = undefined;
 	let toTranslate = "";
 
 	let history = [];
@@ -23,11 +24,12 @@
 	function onTranslateChange() {
 		wikiPromise = translate(toTranslate);
 		wikiPromise.then((entry) => {
+			err = undefined;
 			if (loadedFirstItem) {
 				
 				history = [prevEntry, ...history];
 			}
-			prevEntry = entry;
+			prevEntry = entry; 
 
 			const index = entryInHistory(prevEntry);
 			if (index >= 0) {
@@ -38,7 +40,17 @@
 
 			loadedFirstItem = true;
 			console.log(history);
+		}).catch(e => {
+			err = e;
+			console.log("error", e);
 		});
+	}
+
+	function hasError(){
+		if (err !== undefined){
+			return true;
+		}
+		return false;
 	}
 </script>
 
@@ -49,6 +61,8 @@
 	<div>
 		{#if !loadedFirstItem}
 			<h3>Type to find out...</h3>
+		{:else if hasError() }
+			<code>{err}</code>
 		{:else}
 			<ResultCard title={prevEntry.title} subtitle={prevEntry.subtitle} img={prevEntry.img}/>
 		{/if}
