@@ -1,20 +1,22 @@
 <script>
-	import {getWikipediaEntry} from './wikipedia.js'
+	import translate from './fetchentry.js'
 	import SearchBar from './components/searchbar.svelte';
 	import ResultCard from './components/resultcard.svelte';
 	import HistoryCard from './components/historycard.svelte';
 
-	let wikiEntry = getDummyWikipediaEntry();
+	let wikiEntry;
 	let toTranslate = "";
-	let subtitle = "màidāngláo";
-	let img = "https://www.telegraph.co.uk/content/dam/business/2016/04/23/mcdonalds3_1-xlarge_trans_NvBQzQNjv4Bqek9vKm18v_rkIPH9w2GMNvrBHlngucm5MflHTV9w6vk.jpg";
+
+	let history = [];
+	let loadedFirstItem = false;
 
 	function onTranslateChange() {
-		wikiEntry = getWikipediaEntry(toTranslate);
-	}
-	
-	async function getDummyWikipediaEntry() {
-		return "Type to find out...";
+		wikiEntry = translate(toTranslate);
+		wikiEntry.then((entry) => {
+			loadedFirstItem = true;
+			history.push(entry);
+			console.log("loaded new entry", entry, history);
+		});
 	}
 </script>
 
@@ -23,13 +25,19 @@
 	<SearchBar on:change={onTranslateChange} bind:value={toTranslate}/>
 
 	<div>
-		{#await wikiEntry}
-		<code>loading...</code>
-		{:then entry}
-		<ResultCard title={entry} subtitle={subtitle} img={img}/>
-		{:catch error}
-		<p>Error {error}</p>
-		{/await}
+		{#if !loadedFirstItem}
+			<code>Type to find out...</code>
+		{:else}
+
+			{#await wikiEntry}
+			<code>loading...</code>
+			{:then entry}
+			<ResultCard title={entry.title} subtitle={entry.subtitle} img={entry.img}/>
+			{:catch error}
+			<p>Error {error}</p>
+			{/await}
+			
+		{/if}
 	</div>
 	<br>
 	<HistoryCard engTitle={"McDonald's"} zhTitle={"麦当劳"} zhSubtitle={"màidāngláo"}/>
