@@ -1,5 +1,6 @@
 # ZenmeShuo?! Whats is it called?! 
 Translate brand names between english and chinese using wikipedia written with svelte
+[https://zenmeshuo.surge.sh/](https://zenmeshuo.surge.sh/)
 
 ## Get started
 Install the dependencies...
