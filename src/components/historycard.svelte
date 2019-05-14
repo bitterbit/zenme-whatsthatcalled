@@ -21,19 +21,14 @@
     h1 {
         font-weight: 100;
     }
-    #seperator {
-        border-left: 1px solid #d7d7d7;
-        transform: rotate(-45deg);
-    }
 </style>
 
 <div id="card" class="row" in:slide out:fade>
-    <div class="column column-40">
+    <div class="column column-50">
         <h2 style="margin-bottom: -5px;">{zhTitle}</h2>
         <h5>{zhSubtitle}</h5>
     </div>
-    <span id="seperator"></span>
-    <div class="column column-60" style="text-align: right">
+    <div class="column column-50" style="text-align: right">
         <h1>{engTitle}</h1>
     </div>
 </div>
