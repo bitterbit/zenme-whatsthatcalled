@@ -21,28 +21,35 @@
 		return -1;
 	}
 
+	function addToHistory(entry){
+		history = [entry, ...history];
+	}
+
+	function removeFromHistory(entry){
+		const index = entryInHistory(entry);
+		if (index >= 0) {
+			setTimeout(() => {
+				history = history.filter(h => h.title !== entry.title);
+			}, 50)
+		}
+	}
+
 	function onTranslateChange() {
 		wikiPromise = translate(toTranslate);
 		wikiPromise.then((entry) => {
 			err = undefined;
 			if (loadedFirstItem) {
-				
-				history = [prevEntry, ...history];
+				addToHistory(prevEntry);
+				removeFromHistory(entry);
 			}
 			prevEntry = entry; 
-
-			const index = entryInHistory(prevEntry);
-			if (index >= 0) {
-				setTimeout(() => {
-					history = history.filter(h => h.title !== prevEntry.title);
-				}, 100)
-			}
-
 			loadedFirstItem = true;
-			console.log(history);
 		}).catch(e => {
+			if(prevEntry !== undefined && entryInHistory(prevEntry) == -1){
+				addToHistory(prevEntry);
+				console.log("added entry after error", prevEntry);
+			}
 			err = e;
-			console.log("error", e);
 		});
 	}
 
@@ -59,10 +66,10 @@
 	<SearchBar on:change={onTranslateChange} bind:value={toTranslate}/>
 
 	<div>
-		{#if !loadedFirstItem}
-			<h3>Type to find out...</h3>
-		{:else if hasError() }
-			<code>{err}</code>
+		{#if hasError()}
+			<h5>{err}</h5>
+		{:else if !loadedFirstItem}
+			<h3>Type to find out...</h3>			
 		{:else}
 			<ResultCard title={prevEntry.title} subtitle={prevEntry.subtitle} img={prevEntry.img}/>
 		{/if}
