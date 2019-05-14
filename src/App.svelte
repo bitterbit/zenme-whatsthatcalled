@@ -48,7 +48,7 @@
 
 	<div>
 		{#if !loadedFirstItem}
-			<code>Type to find out...</code>
+			<h3>Type to find out...</h3>
 		{:else}
 			<ResultCard title={prevEntry.title} subtitle={prevEntry.subtitle} img={prevEntry.img}/>
 		{/if}
