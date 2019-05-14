@@ -14,6 +14,13 @@
         color: #ccc;
     }
 </style>
-<span>Word: </span>
 
-<input class="{hasDefault? 'default_value' : ''}" on:focus={onFocus} on:change bind:value={value} type=text/>
+<div style="text-align: center">
+    <input 
+        style="max-width: 600px"
+        class="{hasDefault? 'default_value' : ''}" 
+        on:change
+        on:focus={onFocus} 
+        bind:value={value} 
+        type=text/>
+</div>
