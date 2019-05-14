@@ -926,7 +926,7 @@ var app = (function () {
 	}
 
 	const defaultOptions = {
-		apiUrl: 'http://en.wikipedia.org/w/api.php',
+		apiUrl: 'https://en.wikipedia.org/w/api.php',
 		origin: '*'
 	};
 
