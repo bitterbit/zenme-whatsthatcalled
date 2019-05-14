@@ -1,15 +1,5 @@
 import {api, parseContent} from './wikiapi.js';
 
-const getFileName = text => {
-	if (!text) return undefined;
-	if (text.indexOf(':') !== -1) {
-		const [, name] = text.split(':');
-		return name;
-	}
-	return text;
-};
-
-
 function log(obj){
     console.log(obj);
     return obj;
@@ -148,22 +138,29 @@ export default function wikiPage(title, apiOptions=defaultOptions) {
     }
     
     function updatePageId(res){
-        const pagesIds = Object.keys(res.query.pages);
+		const pagesIds = Object.keys(res.query.pages);
         if (pagesIds.length > 0){
-            raw.pageid = pagesIds[0];
+			raw.pageid = pagesIds[0];
+			raw.title = res.query.pages[raw.pageid].title;
         } else {
             console.log("Warning: no page in response...", res);
         }
     
         return res;
-    }    
+	}   
+	
+	function getTitle(){
+		return raw.title;
+	}
 
 	const page = {
+		content,
 		summary,
         images,
         rawImages,
         langlinks,
-        lang
+		lang,
+		getTitle
 	};
 
 	return page;

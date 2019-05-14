@@ -7,7 +7,7 @@ export default async function getEntry(engTitle) {
     const pinyin = han(lang.title).map(ch => ch[0]).join(" ");
 
     return {
-        origin: engTitle,
+        origin: page.getTitle(),
         title: lang.title,
         subtitle: pinyin,
         img: "https://logo.clearbit.com/"+engTitle+".com?size=200"
