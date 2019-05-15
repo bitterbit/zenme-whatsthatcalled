@@ -15,14 +15,19 @@ export default async function getEntry(engTitle) {
         throw new Error("Page \""+engTitle + "\" has no translation to chinese");
     }
     
+    const img = "https://logo.clearbit.com/" + removeStr(removeStr(engTitle, " "), "'") + ".com?size=300"
     const pinyin = han(lang.title).map(ch => ch[0]).join(" ");
 
     return {
         origin: page.getTitle(),
         title: lang.title,
         subtitle: pinyin,
-        img: "https://logo.clearbit.com/"+engTitle+".com?size=200"
+        img: img
     };
 
     // throw new Error("...");
+}
+
+function removeStr(str, s){
+    return str.split(s).join("")
 }
