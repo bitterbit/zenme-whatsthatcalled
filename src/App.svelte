@@ -35,6 +35,10 @@
 	}
 
 	function onTranslateChange() {
+		if (toTranslate == ""){
+			return;
+		}
+		
 		wikiPromise = translate(toTranslate);
 		wikiPromise.then((entry) => {
 			err = undefined;
